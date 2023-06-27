@@ -1,0 +1,102 @@
+
+| Step                           | HR User Flow                       | Employee User Flow                  |
+|--------------------------------|------------------------------------|-------------------------------------|
+| Start                          |                                    |                                     |
+| Login Page                     |                                    |                                     |
+| Dashboard Page                 |                                    |                                     |
+| User Role Check                |                                    |                                     |
+| Employee Management            | Add Employee                       |                                     |
+|                                | Edit Employee Details              |                                     |
+|                                | Delete Employee                    |                                     |
+| Leave Management               | Approve/Reject Requests            |                                     |
+| Attendance Tracking            | Record Attendance                  |                                     |
+|                                | Generate Attendance Report         |                                     |
+<!-- | Performance Appraisal          | Set Performance Goals              |                                     |
+|                                | Conduct Performance Evaluation     |                                     |
+|                                | Generate Performance Report        |                                     | -->
+<!-- | Training Management            | Schedule Training Sessions         |                                     |
+|                                | Track Training Attendance          |                                     |
+|                                | Assess Training Effectiveness      |                                     |
+|                                | Generate Training Reports          |                                     | -->
+| Settings Page                  | Configure HRMS Settings            |                                     |
+| Logout                         |                                    |                                     |
+
+| View Personal Information      |                                    | Update Personal Information         |
+| View Employment Details        |                                    |                                     |
+| View Leave Balances            |                                    | Submit Leave Requests               |
+<!-- | Access Pay Stub and Salary     |                                    | Access Company Policies             | -->
+<!-- | View Training Programs         |                                    | Register for Training Courses       | -->
+| Communicate with HR            |                                    |                                     |
+| Logout                         |                                    |                                     |
+| End                            |                                    |                                     |
+
+
+----------------------------------------------------------------------------------------------
+DATABASE CHART
+----------------------------------------------------------------------------------------------
+
++---------------------+       +---------------------+
+|      Employees      |       |     Departments     |
++---------------------+       +---------------------+
+| employee_id (PK)    |<------| department_id (PK)  |
+| first_name          |       | department_name     |
+| last_name           |
+| email               |
+| phone_number        |
+| address             |
++---------------------+
+
+     |
+     V
+
++---------------------+       +---------------------+
+|   LeaveRequests     |       |     Attendance       |
++---------------------+       +---------------------+
+| request_id (PK)     |<------| attendance_id (PK)   |
+| employee_id (FK)    |       | employee_id (FK)     |
+| start_date          |       | date                |
+| end_date            |       | time_in             |
+| reason              |       | time_out            |
+| status              |
++---------------------+
+
+     |
+     V
+
++---------------------+       +---------------------+
+| PerformanceGoals    |       |   TrainingPrograms   |
++---------------------+       +---------------------+
+| goal_id (PK)        |<------| program_id (PK)      |
+| employee_id (FK)    |       | program_name         |
+| goal_description   |       | program_description  |
+| target_date         |
++---------------------+
+
+     |
+     V
+
++---------------------+       +---------------------+
+| TrainingEnrollments |       |       Payroll        |
++---------------------+       +---------------------+
+| enrollment_id (PK)  |<------| payroll_id (PK)      |
+| employee_id (FK)    |       | employee_id (FK)     |
+| program_id (FK)     |       | pay_period           |
+| enrollment_date     |       | salary               |
++---------------------+
+
+     |
+     V
+
++---------------------+
+|   CompanyPolicies   |
++---------------------+
+| policy_id (PK)      |
+| policy_title        |
+| policy_description  |
++---------------------+
+
+
+
+
+
+
