@@ -1,6 +1,7 @@
 {
   "name": "hrms",
   "version": "0.1.0",
+  "homepage": "https://shifa-kv.github.io/HRMS-Web-App",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -18,6 +19,7 @@
     "express": "^4.18.2",
     "firebase": "^9.22.2",
     "firebase-admin": "^11.9.0",
+    "gh-pages": "^5.0.0",
     "react": "^18.2.0",
     "react-circular-progressbar": "^2.1.0",
     "react-dom": "^18.2.0",
@@ -33,6 +35,8 @@
   },
   "scripts": {
     "start": "concurrently \"react-scripts start\" \"node server.js\"",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

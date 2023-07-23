@@ -67,7 +67,7 @@ function App() {
         isLoading ? (
           <Loading />
         ) : (
-          <Router>
+          <Router basename={process.env.PUBLIC_URL}>
             <Routes>
               <Route path="/" element={<Main />} />
               <Route path="/hr/*" element={<PrivateRoute isAuthenticated={userStore.isAuthenticated} isValidUsertype={userStore.type == 'admin'}><AdminRoute /></PrivateRoute>} />
