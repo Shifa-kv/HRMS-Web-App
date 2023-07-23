@@ -80,6 +80,7 @@ const Login = () => {
       ...ValidationErrors,
       ...errors
     });
+    console.log(errors)
   };
 
 
@@ -100,7 +101,7 @@ const Login = () => {
               id="email"
               type="email"
               name="email"
-              value="hr@mail.com"
+              defaultValue='hr@mail.com'
               onBlur={handleChange}
             />
             {ValidationErrors.email &&
@@ -116,7 +117,7 @@ const Login = () => {
               id="password"
               type="password"
               name="password"
-              value='123456'
+              defaultValue='123456'
               onBlur={handleChange}
             />
             {ValidationErrors.password &&

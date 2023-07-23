@@ -43,3 +43,7 @@ button.defaultstyle {
   border-radius: 50px;
   font-weight: 600;
 }
+
+input {
+  max-height: 42px !important;
+}

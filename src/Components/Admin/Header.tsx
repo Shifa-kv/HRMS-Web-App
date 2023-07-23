@@ -18,10 +18,26 @@ const Header = () => {
                     <div className="w-full">
                         <nav className="w-full">
                             <ul className="flex w-full gap-x-3 ">
-                                <li className="flex px-3 py-1 rounded-2xl items-center hover:bg-defaultBg-100"><FaHouse className="mr-2" /> Dashboard</li>
-                                <li className="flex px-3 py-1 rounded-2xl items-center hover:bg-defaultBg-100"><FaPeopleGroup className="mr-2" /> Employees</li>
-                                <li className="flex px-3 py-1 rounded-2xl items-center hover:bg-defaultBg-100"><FaList className="mr-2" /> Leaves</li>
-                                <li className="flex px-3 py-1 rounded-2xl items-center hover:bg-defaultBg-100"><FaBarsProgress className="mr-2" /> Projects</li>
+                                <li className="flex px-3 py-1 rounded-2xl items-center hover:bg-defaultBg-100">
+                                    <Link to='../home' className='flex items-center'>
+                                        <FaHouse className="mr-2" /> Dashboard
+                                    </Link>
+                                </li>
+                                <li className="flex px-3 py-1 rounded-2xl items-center hover:bg-defaultBg-100">
+                                    <Link to='../employees' className='flex items-center'>
+                                        <FaPeopleGroup className="mr-2" /> Employees
+                                    </Link>
+                                </li>
+                                <li className="flex px-3 py-1 rounded-2xl items-center hover:bg-defaultBg-100">
+                                    <Link to='../' className='flex items-center'>
+                                        <FaList className="mr-2" /> Leaves
+                                    </Link>
+                                </li>
+                                <li className="flex px-3 py-1 rounded-2xl items-center hover:bg-defaultBg-100">
+                                    <Link to='../' className='flex items-center'>
+                                        <FaBarsProgress className="mr-2" /> Projects
+                                    </Link>
+                                </li>
                             </ul>
                         </nav>
                     </div>
@@ -32,23 +48,26 @@ const Header = () => {
                                     className="mr-2 border border-defaultBg-100 rounded-full p-1 text-center bg-defaultBg-100"
                                 /></li>
                             <li className="flex items-center">
-                                <FaBell size={25}
-                                    className="mr-2 border border-defaultBg-100 rounded-full p-1 text-center bg-defaultBg-100"
-                                /></li>
+                                <Link to='../notifications'>
+                                    <FaBell size={25}
+                                        className="mr-2 border border-defaultBg-100 rounded-full p-1 text-center bg-defaultBg-100"
+                                    />
+                                </Link>
+                            </li>
                             <li className="flex group items-center capitalize rounded-full p-1 pr-3 text-center bg-defaultBg-100"
                                 onClick={() => { }} >
                                 <FaPerson size={25}
                                     className="mr-2 border border-defaultBg-100  rounded-full p-1 text-center bg-defaultBg-100"
                                 />
-                                {user.uname}
-                                
-                        <div className="absolute top-full hidden right-0 pt-3 group-hover:block   bg-opacity-50 ">
-                            <div className="bg-defaultBg text-left rounded p-4 px-5 block border-defaultBg-100 border">
-                                <p><Link to='/'>My profile</Link></p>
-                                <p><Link to='/'>Settings</Link></p>
-                                <Logout />
-                            </div>
-                        </div>
+                                {user.name}
+
+                                <div className="absolute top-full hidden right-0 pt-3 group-hover:block   bg-opacity-50 ">
+                                    <div className="bg-defaultBg text-left rounded p-4 px-5 block border-defaultBg-100 border">
+                                        <p><Link to='../employees/view/qDgkYNJslpyXBNkkuq51'>My profile</Link></p>
+                                        <p><Link to='/'>Settings</Link></p>
+                                        <Logout />
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                     </div>

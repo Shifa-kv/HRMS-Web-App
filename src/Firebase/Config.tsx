@@ -1,6 +1,8 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/auth";
+import Timestamp = firebase.firestore.Timestamp;
+
 // FIREBASE_CONFIGURATION
 const firebaseConfig = {
     "apiKey": process.env.REACT_APP_FIREBASE_API_KEY,
@@ -21,4 +23,4 @@ firebase.initializeApp(firebaseConfig);
 const firestore = firebase.firestore();
 const auth = firebase.auth();
 
-export { firestore, auth };
+export { firestore, auth,Timestamp };

@@ -8,7 +8,6 @@ const Notice = ({ typeProp }: { typeProp: string }) => {
   const dispatch = useDispatch();
   const noticeStore = useSelector((state: RootState) => state.notice)
   const data = noticeStore?.data?.[typeProp];
-  console.log(noticeStore?.data)
 
   let bgColor;
   if ((data?.code == 1)) {
@@ -21,9 +20,14 @@ const Notice = ({ typeProp }: { typeProp: string }) => {
     bgColor = 'bg-green-200'
   }
   useEffect(() => {
-    setTimeout(() => {
+    if (data?.time) {
+    const timeout = setTimeout(() => {
       dispatch(delNotice(typeProp));
     }, data?.time);
+    return () => {
+      clearTimeout(timeout);
+    };
+  }
   }, [data?.time])
 
   return (

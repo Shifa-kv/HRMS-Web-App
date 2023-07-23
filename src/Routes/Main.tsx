@@ -12,7 +12,7 @@ const Main = () => {
               <Route path='/' element={
                 userStore.type == 'admin' ?
                 <Navigate to='/hr/home' />:
-                <Navigate to='/hr/user' />
+                <Navigate to='/user/home' />
               }  />
             }
         </Routes>

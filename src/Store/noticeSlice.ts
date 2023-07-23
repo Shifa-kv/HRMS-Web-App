@@ -8,6 +8,7 @@ const noticeSlice = createSlice({
         setNotice:(state,action)=>{
             state.status = true;
             state.data = {
+                ...state.data,
                 [action.payload?.name]:
                 {
                     message:[action.payload?.msg],

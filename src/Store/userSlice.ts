@@ -6,11 +6,8 @@ const userSlice = createSlice({
     initialState:InitialState.auth,
     reducers:{
         setUser:(state,action)=>{
-            state.id = action.payload.id;
-            state.uname = action.payload.name;
-            state.type = action.payload.type;
-            state.isAuthenticated = true;
             console.log('user updated:',state.type,state.uname);
+            return {...action.payload,isAuthenticated:true}
         },
         unsetUser:(state)=>{
             return InitialState.auth
