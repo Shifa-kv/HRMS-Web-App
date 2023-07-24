@@ -6,6 +6,7 @@ import { firestore, auth } from '../../Firebase/Config';
 import axios from 'axios';
 import { useDepartment } from '../../Utils/departmentUtils';
 import { Timestamp } from '../../Firebase/Config';
+import AddNotification from '../../Utils/NotificationUtils';
 
 
 const EmployeeUploadForm = ({ closeModal }: { closeModal?: () => void }) => {
@@ -110,7 +111,7 @@ const EmployeeUploadForm = ({ closeModal }: { closeModal?: () => void }) => {
                         console.log(res);
                         dispatch(setNotice({ name: 'addEmployee', msg: userRecord?.data?.message, code: 3, time: 3000 }));
                         block && block.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        AddNotification('New registration!', `New employee ${data.name} added.`, `employees/view/${res.id}`, 'employee')
+                        AddNotification('New registration!',user.id ,`New employee ${data.name} added. View profile and update their details.`, `employees/view/${res.id}`, 'employee')
                         setTimeout(() => {
                             closeModal?.();
                         }, 3000);
@@ -129,21 +130,6 @@ const EmployeeUploadForm = ({ closeModal }: { closeModal?: () => void }) => {
         }
     }
 
-    const AddNotification = (title: string, message?: string, linkTo?: string, linkPage?: string) => {
-        firestore.collection("notifications").add({
-            title,
-            message,
-            linkTo,
-            linkPage,
-            timestamp: Timestamp.now(),
-            read:false,
-            user:user.id
-        }).then((res) => {
-            console.log(res);
-        }).catch((error) => {
-            console.log("Error adding notification : ", error);
-        });
-    }
 
     // set manager data & department data   
     useEffect(() => {

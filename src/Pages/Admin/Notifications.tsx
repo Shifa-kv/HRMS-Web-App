@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { firestore } from "../../Firebase/Config";
 import { Link } from "react-router-dom";
 import Header from "../../Components/Admin/Header";
+import { FaTrash } from "react-icons/fa6";
 
 const Notifications = () => {
     const [Notifications, setNotifications] = useState<any>([]);
@@ -34,35 +35,52 @@ const Notifications = () => {
                 console.log('error adding notification open status', error);
             });
     }
+    const handleDelete = (id: string) => {
+        firestore.collection("notifications").doc(id).delete().then(() => {
+            console.log("A notification got deleted!");
+        }).catch((error) => {
+            console.log("Error removing notification: ", error);
+        });
+    }
 
     return (
         <section>
             <Header />
             <div className='bg-defaultBg  py-10'>
-            <div className='container flex justify-between'>
-                <div>
-                    <h1 className=' text-3xl text-amber-100 font-thin'>Notifications</h1>
+                <div className='container flex justify-between'>
+                    <div>
+                        <h1 className=' text-3xl text-amber-100 font-thin'>Notifications</h1>
+                    </div>
                 </div>
-            </div>
             </div>
             <div className="container bg-gradient-to-b from-defaultBg to-transparent to-[130px] from-[1.5rem]">
                 <div className="px-6">
                     {Notifications?.map((notification: any) => (
-                        <Link to={`../${notification.linkTo}`} onClick={() => { !notification.read && handleOpen(notification.id) }}>
-                            <div
-                                key={notification.id}
-                                className={`flex items-center justify-between 
+
+                        <div
+                            key={notification.id}
+                            className={`flex items-center justify-between 
                                     ${notification.read ? 'bg-gray-100' : 'bg-color-one'} 
                                     px-4 py-3 rounded-lg mb-4 shadow-md`
-                                }
+                            }
+                        >
+                            <Link to={`../${notification.linkTo}`} 
+                            onClick={() => { !notification.read && handleOpen(notification.id) }}
+                            className="w-full"
                             >
                                 <div>
                                     <h6 className=" font-semibold">{notification.title}</h6>
                                     <p className="text-sm text-gray-600">{notification?.message}</p>
                                 </div>
-                                <p className=" text-sm">{formatDate(notification?.timestamp.seconds).date}<br />{formatDate(notification.timestamp).time}</p>
+                            </Link>
+                            <div className="flex items-center space-x-3">
+                                <p className=" text-sm  border-gray-500 rounded-md px-2 ">
+                                    {formatDate(notification?.timestamp.seconds).date + ' '}
+                                    {formatDate(notification.timestamp).time}
+                                </p>
+                                <FaTrash onClick={() => handleDelete(notification.id)} />
                             </div>
-                        </Link>
+                        </div>
                     ))}
                 </div>
 

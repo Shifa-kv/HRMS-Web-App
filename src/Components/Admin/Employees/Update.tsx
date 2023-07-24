@@ -274,7 +274,7 @@ const EmployeeUpdate = ({ closeModal, type, User }: { closeModal?: () => void, t
                                 </div>
                                 <div className="mb-4 space-x-3 flex">
                                     <select name='department' onBlur={handleChange} onChange={getManager} className="border w-full border-gray-300 p-2 rounded">
-                                        <option>Department</option>
+                                        <option>Department *</option>
                                         {Departments && Departments?.map((dep) => {
                                             return <option value={dep.id} selected={dep?.id === User.department} key={dep.id}>
                                                 {dep.title}

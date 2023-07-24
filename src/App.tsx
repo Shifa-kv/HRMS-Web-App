@@ -29,7 +29,7 @@ function App() {
                   .then((doc) => {
                     const managerName = doc.data()?.name;
                     userData = {...userData,managerName}
-                    dispatch(setUser({ ...userData, id: doc.id, managerName }))
+                    dispatch(setUser({ ...userData, auth_id:userData.id, id: doc.id, managerName }))
                   })
               }
               else{

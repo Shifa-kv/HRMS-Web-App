@@ -41,9 +41,11 @@ const handleOpen = (id:string)=>{
             <h2 className="px-6  text-2xl font-bold mb-4 text-defaultBg">Notifications</h2>
             <div className="px-6">
                 {Notifications?.map((notification:any) => (
-                    <Link to={`../${notification.linkTo}`} onClick={()=>{ !notification.read && handleOpen(notification.id)}}>
+                    <Link to={`../${notification.linkTo}`} 
+                    onClick={()=>{ !notification.read && handleOpen(notification.id)}}
+                    key={notification.id}
+                    >
                     <div
-                        key={notification.id}
                         className={`flex items-center justify-between 
                                     ${notification.read ? 'bg-gray-100' : 'bg-color-three'} 
                                     px-4 py-3 rounded-lg mb-4 shadow-md`
