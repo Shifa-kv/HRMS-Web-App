@@ -29,12 +29,12 @@ const Header = () => {
                                     </Link>
                                 </li>
                                 <li className="flex px-3 py-1 rounded-2xl items-center hover:bg-defaultBg-100">
-                                    <Link to='../' className='flex items-center'>
+                                    <Link to='../leaves' className='flex items-center'>
                                         <FaList className="mr-2" /> Leaves
                                     </Link>
                                 </li>
                                 <li className="flex px-3 py-1 rounded-2xl items-center hover:bg-defaultBg-100">
-                                    <Link to='../' className='flex items-center'>
+                                    <Link to='../projects' className='flex items-center'>
                                         <FaBarsProgress className="mr-2" /> Projects
                                     </Link>
                                 </li>

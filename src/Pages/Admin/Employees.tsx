@@ -11,13 +11,9 @@ const Employees = () => {
       <Header />
       <Notice typeProp='deleteEmployee' />
       <EmployeeBanner page='main' setSelection={setSelection} />
-
-      {/* section 1 start */}
       <div className='container bg-gradient-to-b from-defaultBg to-transparent to-[130px] from-[1.5rem] '>        
             <EmployeeList selection={Selection} />
       </div>
-      {/* section 1 end */}
-
     </section>
   )
 }
