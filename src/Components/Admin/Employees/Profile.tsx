@@ -28,7 +28,6 @@ const EmployeeProfile = () => {
                         })
             })
     }, [id])
-    console.log(User)
 
     return (
         <div className='container bg-gradient-to-b from-defaultBg to-transparent to-[130px] from-[1.5rem] '>
