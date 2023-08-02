@@ -1,40 +1,50 @@
 export type RootState = {
   isLoading: boolean
   auth: User
-  notice:{    
-    status:boolean,
-    data?:{
-      [key:string]:Notice
+  notice: {
+    status: boolean,
+    data?: {
+      [key: string]: Notice
     }
   }
-  department?: department|null
+  department?: department | null
+  attendance:attendance
 };
 type User = {
-  isAuthenticated:boolean;
+  isAuthenticated: boolean;
   id: string;
   type?: string;
   uname?: string;
 }
 export type Notice = {
-  message?:[string]
-  code?:number,  //1:error,2:warning,3:success
-  time?:number // in seconds
+  message?: [string]
+  code?: number,  //1:error,2:warning,3:success
+  time?: number // in seconds
 }
 type department = [{
-  id?:string,
-  title?:string
+  id?: string,
+  title?: string
 }]
+type attendance = {
+  allowCheckin: boolean,
+  attnd_id?: string,
+  time_in?: string,
+  time_out?: string
+}
 
 const InitialState: RootState = {
-  isLoading:true,
+  isLoading: true,
   auth: {
-    isAuthenticated:false,
+    isAuthenticated: false,
     id: ''
   },
   notice: {
-    status:false,
+    status: false,
   },
-  department:null
+  department: null,
+  attendance:{
+    allowCheckin:false
+  }
 };
 
 export { InitialState };

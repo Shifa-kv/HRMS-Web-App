@@ -20,8 +20,8 @@ const Header = () => {
                             <ul className="flex w-full gap-x-3 ">
                                 <li className="flex px-3 py-1 rounded-2xl items-center hover:bg-defaultBg-100"><Link to='../' className="flex items-center"><FaHouse className="mr-2" /> Dashboard</Link></li>
                                 <li className="flex px-3 py-1 rounded-2xl items-center hover:bg-defaultBg-100"><Link to='/user/profile' className="flex items-center"><FaPeopleGroup className="mr-2" /> Profile</Link></li>
-                                <li className="flex px-3 py-1 rounded-2xl items-center hover:bg-defaultBg-100"><Link to='../' className="flex items-center"><FaList className="mr-2" /> Leaves</Link></li>
-                                <li className="flex px-3 py-1 rounded-2xl items-center hover:bg-defaultBg-100"><Link to='../' className="flex items-center"><FaBarsProgress className="mr-2" />My Projects</Link></li>
+                                <li className="flex px-3 py-1 rounded-2xl items-center hover:bg-defaultBg-100"><Link to='../leaves' className="flex items-center"><FaList className="mr-2" /> Leaves</Link></li>
+                                <li className="flex px-3 py-1 rounded-2xl items-center hover:bg-defaultBg-100"><Link to='../attendance' className="flex items-center"><FaBarsProgress className="mr-2" />Attendence</Link></li>
                             </ul>
                         </nav>
                     </div>

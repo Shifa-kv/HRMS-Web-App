@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react'
 import Notice from '../Notice';
 import { useDispatch, useSelector } from 'react-redux';
-import { delNotice, setNotice } from '../../Store/noticeSlice';
-import { firestore, auth } from '../../Firebase/Config';
+import { setNotice } from '../../Store/noticeSlice';
+import { firestore } from '../../Firebase/Config';
 import axios from 'axios';
 import { useDepartment } from '../../Utils/departmentUtils';
-import { Timestamp } from '../../Firebase/Config';
 import AddNotification from '../../Utils/NotificationUtils';
 
 
@@ -17,6 +16,7 @@ const EmployeeUploadForm = ({ closeModal }: { closeModal?: () => void }) => {
     const [FilteredManagers, setFilteredManagers] = useState<{ [key: string]: string }[]>([]);
     const [Departments, setDepartments] = useState<{ [key: string]: string }[]>([]);
     const [validationErrors, setValidationErrors] = useState<{ [key: string]: string | boolean | null; }>({});
+    const [Loading, setLoading] = useState(false)
     const [data, setData] = useState<{ [key: string]: string }>({
         name: '',
         phone: '',
@@ -83,6 +83,7 @@ const EmployeeUploadForm = ({ closeModal }: { closeModal?: () => void }) => {
             return;
         }
         else {
+            setLoading(true);
             try {
                 // authenticate a new user
                 // Make an HTTP POST request to the server-side endpoint
@@ -109,17 +110,20 @@ const EmployeeUploadForm = ({ closeModal }: { closeModal?: () => void }) => {
                         type: 'user'
                     }).then((res) => {
                         console.log(res);
+                        setLoading(false)
                         dispatch(setNotice({ name: 'addEmployee', msg: userRecord?.data?.message, code: 3, time: 3000 }));
                         block && block.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        AddNotification('New registration!',user.id ,`New employee ${data.name} added. View profile and update their details.`, `employees/view/${res.id}`, 'employee')
+                        AddNotification('New registration!', user.id, `New employee ${data.name} added. View profile and update their details.`, `employees/view/${res.id}`, 'employee')
                         setTimeout(() => {
                             closeModal?.();
                         }, 3000);
                     }).catch((error) => {
+                        setLoading(false)
+                        dispatch(setNotice({ name: 'addEmployee', msg: 'Employee registration failed! try again.', code: 1 }))
                         console.log("Error adding to firestore db : ", error);
                     });
-
                 }).catch((error) => {
+                    setLoading(false)
                     console.log("Error : ", error?.response?.data?.error);
                     dispatch(setNotice({ name: 'addEmployee', msg: error?.response?.data?.error?.message, code: 1 }))
                 });
@@ -161,144 +165,150 @@ const EmployeeUploadForm = ({ closeModal }: { closeModal?: () => void }) => {
     return (
         <div>
             <div className="fixed inset-0 grid overflow-y-auto	py-5 items-center justify-center z-50 bg-[#0000008c]">
-                <div className="bg-white p-8 rounded shadow-md relative " id='employeeFormPopup'>
-                    <button className="mt-4 bg-black rounded-full text-xs absolute right-2 top-1 text-white font-bold py-1 px-2 " onClick={closeModal}>
-                        X
-                    </button>
-                    <h1 className="text-2xl font-bold  mb-5">Quick add employee</h1>
-                    <Notice typeProp='addEmployee' />
-                    <form onSubmit={handleSubmit} className='mt-3'>
-                        <div className="mb-4 space-x-3 flex">
-                            <input
-                                id="NameInput"
-                                type="text"
-                                name="name"
-                                placeholder="Name*"
-                                onBlur={handleChange}
-                                className="border border-gray-300 p-2 rounded"
-                            />
-                            <input
-                                id="EidInput"
-                                type="text"
-                                name="eid"
-                                placeholder="Employee id*"
-                                onBlur={handleChange}
-                                className="border border-gray-300 p-2 rounded"
-                            />
-                        </div>
-                        <div className="mb-4 space-x-3 flex">
+                <div className="bg-white rounded shadow-md relative " id='employeeFormPopup'>
+                    {Loading&&<div className="flex rounded items-center justify-center h-full w-full absolute bg-defaultBg/70 z-10">
+                        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 "></div>
+                    </div>}
+                    <div className='p-8 '>
+                        <button className="mt-4 bg-black rounded-full text-xs absolute right-2 top-1 text-white font-bold py-1 px-2 " onClick={closeModal}>
+                            X
+                        </button>
+                        <h1 className="text-2xl font-bold  mb-5">Quick add employee</h1>
+                        <Notice typeProp='addEmployee' />
+                        <form onSubmit={handleSubmit} className='mt-3 '>
 
-                            <input
-                                id="role"
-                                type="text"
-                                name="role"
-                                placeholder="Role*"
-                                onBlur={handleChange}
-                                className="border h-max w-full border-gray-300 p-2 rounded"
-                            />
-                            <div>
+                            <div className="mb-4 space-x-3 flex">
                                 <input
-                                    id="phoneNumberInput"
+                                    id="NameInput"
                                     type="text"
-                                    name="phone"
-                                    placeholder="Phone Number*"
+                                    name="name"
+                                    placeholder="Name*"
                                     onBlur={handleChange}
                                     className="border border-gray-300 p-2 rounded"
                                 />
-                                {validationErrors.phone &&
-                                    <small className='block text-red-500	'>{validationErrors.phone}</small>
-                                }
+                                <input
+                                    id="EidInput"
+                                    type="text"
+                                    name="eid"
+                                    placeholder="Employee id*"
+                                    onBlur={handleChange}
+                                    className="border border-gray-300 p-2 rounded"
+                                />
+                            </div>
+                            <div className="mb-4 space-x-3 flex">
+
+                                <input
+                                    id="role"
+                                    type="text"
+                                    name="role"
+                                    placeholder="Role*"
+                                    onBlur={handleChange}
+                                    className="border h-max w-full border-gray-300 p-2 rounded"
+                                />
+                                <div>
+                                    <input
+                                        id="phoneNumberInput"
+                                        type="text"
+                                        name="phone"
+                                        placeholder="Phone Number*"
+                                        onBlur={handleChange}
+                                        className="border border-gray-300 p-2 rounded"
+                                    />
+                                    {validationErrors.phone &&
+                                        <small className='block text-red-500	'>{validationErrors.phone}</small>
+                                    }
+                                </div>
+
+
+                            </div>
+                            <div className="mb-4 space-x-3 flex">
+                                <select name='department' onChange={filterManager} className="border w-full border-gray-300 p-2 rounded">
+                                    <option value='' >Department</option>
+                                    {Departments && Departments?.map((dep) => {
+                                        return <option value={dep.id}>{dep.title}</option>
+                                    })
+                                    }
+                                </select>
+                                <select name='manager' className="border w-full border-gray-300 p-2 rounded">
+                                    <option value='' >Manager</option>
+                                    {FilteredManagers && FilteredManagers?.map((user) => {
+                                        return <option value={user.id}>{user.name}</option>
+                                    })
+                                    }
+                                </select>
                             </div>
 
+                            <div className='w-full mb-4 '>
+                                <label className=' font-semibold'>Employment date: </label><br />
+                                <input
+                                    id="date"
+                                    type="date"
+                                    name="date"
+                                    placeholder="Date"
+                                    onBlur={handleChange}
+                                    max={calculateMaxDate()}
+                                    className="border mt-2 w-full border-gray-300 p-2 rounded"
+                                />
+                            </div>
 
-                        </div>
-                        <div className="mb-4 space-x-3 flex">
-                            <select name='department'  onChange={filterManager} className="border w-full border-gray-300 p-2 rounded">
-                                <option value='' >Department</option>
-                                {Departments && Departments?.map((dep) => {
-                                    return <option value={dep.id}>{dep.title}</option>
-                                })
+                            <div className="mb-4 space-x-3 flex">
+
+                                <input
+                                    id="emailInput"
+                                    type="email"
+                                    name="email"
+                                    placeholder="Email*"
+                                    onBlur={handleChange}
+                                    className="border w-full border-gray-300 p-2 rounded"
+                                />
+                                {validationErrors.email &&
+                                    <small className='block text-red-500	'>{validationErrors.email}</small>
                                 }
-                            </select>
-                            <select name='manager'  className="border w-full border-gray-300 p-2 rounded">
-                                <option value='' >Manager</option>
-                                {FilteredManagers && FilteredManagers?.map((user) => {
-                                    return <option value={user.id}>{user.name}</option>
-                                })
+
+
+                            </div>
+                            <div className="mb-4 space-x-3">
+                                <textarea
+                                    id="addressInput"
+                                    placeholder="Address"
+                                    name="address"
+                                    className="border w-full border-gray-300 p-2 rounded"
+                                />
+                            </div>
+                            <div className="mb-4 ">
+                                <label className='mr-3 font-semibold'>Job status* </label><br />
+                                <input type='radio' name='jobstatus' value='intern' className='mr-2' onBlur={handleChange} />Intern
+                                <input type='radio' name='jobstatus' value='fulltime' className='ml-3 mr-2' onBlur={handleChange} />Fulltime
+                            </div>
+                            <div className="mb-4 ">
+                                <label className='mr-3 font-semibold'>Job mode* </label><br />
+                                <input type='radio' name='jobmode' value='remote' className='mr-2' onBlur={handleChange} />Remote
+                                <input type='radio' name='jobmode' value='office' className='ml-3 mr-2' onBlur={handleChange} />Office
+                            </div>
+                            <div className='mb-4 block'>
+                                <input type='checkbox' name='isManager' className='mr-2 mb-2' />Give Manager features<br />
+                                <label className='mr-3 font-semibold'>Set a password*</label><br />
+                                <input
+                                    id="password"
+                                    type="password"
+                                    name="password"
+                                    min={6}
+                                    placeholder="Password"
+                                    onBlur={handleChange}
+                                    className="border w-full border-gray-300 p-2 rounded"
+                                />
+                                {validationErrors.password &&
+                                    <small className='block text-red-500	'>{validationErrors.password}</small>
                                 }
-                            </select>
-                        </div>
-
-                        <div className='w-full mb-4 '>
-                            <label className=' font-semibold'>Employment date: </label><br />
-                            <input
-                                id="date"
-                                type="date"
-                                name="date"
-                                placeholder="Date"
-                                onBlur={handleChange}
-                                max={calculateMaxDate()}
-                                className="border mt-2 w-full border-gray-300 p-2 rounded"
-                            />
-                        </div>
-
-                        <div className="mb-4 space-x-3 flex">
-
-                            <input
-                                id="emailInput"
-                                type="email"
-                                name="email"
-                                placeholder="Email*"
-                                onBlur={handleChange}
-                                className="border w-full border-gray-300 p-2 rounded"
-                            />
-                            {validationErrors.email &&
-                                <small className='block text-red-500	'>{validationErrors.email}</small>
-                            }
-
-
-                        </div>
-                        <div className="mb-4 space-x-3">
-                            <textarea
-                                id="addressInput"
-                                placeholder="Address"
-                                name="address"
-                                className="border w-full border-gray-300 p-2 rounded"
-                            />
-                        </div>
-                        <div className="mb-4 ">
-                            <label className='mr-3 font-semibold'>Job status* </label><br />
-                            <input type='radio' name='jobstatus' value='intern' className='mr-2' onBlur={handleChange} />Intern
-                            <input type='radio' name='jobstatus' value='fulltime' className='ml-3 mr-2' onBlur={handleChange} />Fulltime
-                        </div>
-                        <div className="mb-4 ">
-                            <label className='mr-3 font-semibold'>Job mode* </label><br />
-                            <input type='radio' name='jobmode' value='remote' className='mr-2' onBlur={handleChange} />Remote
-                            <input type='radio' name='jobmode' value='office' className='ml-3 mr-2' onBlur={handleChange} />Office
-                        </div>
-                        <div className='mb-4 block'>
-                            <input type='checkbox' name='isManager' className='mr-2 mb-2' />Give Manager features<br />
-                            <label className='mr-3 font-semibold'>Set a password*</label><br />
-                            <input
-                                id="password"
-                                type="password"
-                                name="password"
-                                min={6}
-                                placeholder="Password"
-                                onBlur={handleChange}
-                                className="border w-full border-gray-300 p-2 rounded"
-                            />
-                            {validationErrors.password &&
-                                <small className='block text-red-500	'>{validationErrors.password}</small>
-                            }
-                        </div>
-                        <button
-                            type="submit"
-                            className="bg-defaultBg w-full text-white py-2 px-5 rounded"
-                        >
-                            Add
-                        </button>
-                    </form>
+                            </div>
+                            <button
+                                type="submit"
+                                className="bg-defaultBg w-full text-white py-2 px-5 rounded"
+                            >
+                                Add
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
 

@@ -1,6 +1,6 @@
 import { useState,useEffect } from "react";
 import { firestore } from "../../../Firebase/Config";
-import ProgressCircle from "../../ProgressCircle";
+import ProgressCircle from "../../Graphs/ProgressCircle";
 import { FaClipboardList, FaDiagramProject, FaUserPlus, FaUsers } from 'react-icons/fa6';
 import CalculatePercentage from "../../../Utils/CalculatePercentage";
 
