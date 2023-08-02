@@ -26,8 +26,8 @@ function App() {
               let userData = doc.data();
               if (userData?.manager) {
                 firestore.collection('users').doc(userData?.manager).get()
-                  .then((doc) => {
-                    const managerName = doc.data()?.name;
+                  .then((docs) => {
+                    const managerName = docs.data()?.name;
                     userData = {...userData,managerName}
                     dispatch(setUser({ ...userData, auth_id:userData.id, id: doc.id, managerName }))
                   })
