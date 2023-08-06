@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/HRMS-Web-App/static/css/main.91b4e28f.css",
-    "main.js": "/HRMS-Web-App/static/js/main.65b90ef7.js",
+    "main.css": "/HRMS-Web-App/static/css/main.73e6c86a.css",
+    "main.js": "/HRMS-Web-App/static/js/main.330db0a6.js",
     "static/js/787.8a680ba3.chunk.js": "/HRMS-Web-App/static/js/787.8a680ba3.chunk.js",
     "static/media/startbg.jpg": "/HRMS-Web-App/static/media/startbg.79e74b07e031103d2549.jpg",
     "static/media/user.jpg": "/HRMS-Web-App/static/media/user.cfe9f79c746ba3002568.jpg",
     "static/media/logo.png": "/HRMS-Web-App/static/media/logo.050c926afbd2ed38dbf3.png",
     "index.html": "/HRMS-Web-App/index.html",
-    "main.91b4e28f.css.map": "/HRMS-Web-App/static/css/main.91b4e28f.css.map",
-    "main.65b90ef7.js.map": "/HRMS-Web-App/static/js/main.65b90ef7.js.map",
+    "main.73e6c86a.css.map": "/HRMS-Web-App/static/css/main.73e6c86a.css.map",
+    "main.330db0a6.js.map": "/HRMS-Web-App/static/js/main.330db0a6.js.map",
     "787.8a680ba3.chunk.js.map": "/HRMS-Web-App/static/js/787.8a680ba3.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.91b4e28f.css",
-    "static/js/main.65b90ef7.js"
+    "static/css/main.73e6c86a.css",
+    "static/js/main.330db0a6.js"
   ]
 }
