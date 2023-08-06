@@ -24,7 +24,7 @@ function App() {
             snapshot.forEach((doc) => {
               // setting current user data state
               let userData = doc.data();
-              if (userData?.manager) {
+              if (userData?.manager ) {
                 firestore.collection('users').doc(userData?.manager).get()
                   .then((managerdoc) => {
                     const managerName = managerdoc.data()?.name;
