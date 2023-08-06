@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { firestore } from "../../Firebase/Config";
 import { Link } from "react-router-dom";
 import { FaTrash } from "react-icons/fa6";
+import { useSelector } from "react-redux";
 
 const ListNotifications = () => {
+  const user = useSelector((state: any) => state.user);
   const [Notifications, setNotifications] = useState<any>([]);
   useEffect(() => {
     firestore.collection("notifications").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
@@ -43,9 +45,38 @@ const ListNotifications = () => {
   }
   return (
     <div className="container bg-gradient-to-b from-defaultBg to-transparent to-[130px] from-[1.5rem]">
+      <div className="px-6 mb-10">
+      <h2 className=" text-white bg-defaultBg border py-2 px-4 mb-4">Employees Notifications</h2>
+        {Notifications?.filter((data: any) => data.user != user.id).map((notification: any) => (
+          <div
+            key={notification.id}
+            className={`
+            flex items-center justify-between 
+            ${notification.read ? 'bg-gray-100' : 'bg-color-one'} 
+            px-4 py-3 rounded-lg mb-4 shadow-md
+            `}>
+            <Link to={`../${notification.linkTo}`}
+              onClick={() => { !notification.read && handleOpen(notification.id) }}
+              className="w-full"
+            >
+              <div>
+                <h6 className=" font-semibold">{notification.title}</h6>
+                <p className="text-sm text-gray-600">{notification?.message}</p>
+              </div>
+            </Link>
+            <div className="flex items-center space-x-3">
+              <p className=" text-sm  border-gray-500 rounded-md px-2 w-max">
+                {formatDate(notification?.timestamp.seconds).date + ' '}
+                {formatDate(notification.timestamp).time}
+              </p>
+              <FaTrash onClick={() => handleDelete(notification.id)} />
+            </div>
+          </div>
+        ))}
+      </div>
       <div className="px-6">
-        {Notifications?.map((notification: any) => (
-
+        <h2 className=" text-white bg-defaultBg border border-color-one py-2 px-4 mb-4">My Notifications</h2>
+        {Notifications?.filter((data: any) => data.user == user.id).map((notification: any) => (
           <div
             key={notification.id}
             className={`flex items-center justify-between 

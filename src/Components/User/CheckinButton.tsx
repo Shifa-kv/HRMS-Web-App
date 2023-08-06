@@ -26,26 +26,26 @@ const CheckinButton = () => {
             .get().then((snapshot) => {
                 if (snapshot.docs.length === 0) {
                     dispatch(setAttendance({
-                      allowCheckin: false
+                        allowCheckin: false
                     }));
-                  } else {
-                snapshot.docs.map((res) => {
-                    let attnd_status = res.data().time_out ? false : true;
-                    res.data().time_out ?
-                    dispatch(setAttendance({
-                        allowCheckin: attnd_status,
-                        attnd_id: res?.id,
-                        time_in: formatDate(res.data().time_in),
-                        time_out: formatDate(res.data().time_out)
-                    }))
-                    :
-                    dispatch(setAttendance({
-                        allowCheckin: attnd_status,
-                        attnd_id: res?.id,
-                        time_in: formatDate(res.data().time_in)
-                    }))
-                })
-            }
+                } else {
+                    snapshot.docs.map((res) => {
+                        let attnd_status = res.data().time_out ? false : true;
+                        res.data().time_out ?
+                            dispatch(setAttendance({
+                                allowCheckin: attnd_status,
+                                attnd_id: res?.id,
+                                time_in: formatDate(res.data().time_in),
+                                time_out: formatDate(res.data().time_out)
+                            }))
+                            :
+                            dispatch(setAttendance({
+                                allowCheckin: attnd_status,
+                                attnd_id: res?.id,
+                                time_in: formatDate(res.data().time_in)
+                            }))
+                    })
+                }
             })
     }, [user])
 
@@ -87,8 +87,8 @@ const CheckinButton = () => {
                     ...attendance, allowCheckin: false, time_out: formatDate(Timestamp.now().seconds)
                 }))
         }).catch((error) => {
-                    dispatch(setNotice({ name: 'attendence', msg: error.message, code: 1 }));
-                });
+            dispatch(setNotice({ name: 'attendence', msg: error.message, code: 1 }));
+        });
     }
     return (
         <div>

@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import {  setNotice } from '../../../Store/noticeSlice';
 import { firestore } from '../../../Firebase/Config';
 import { useDepartment } from '../../../Utils/departmentUtils';
+import AddNotification from '../../../Utils/NotificationUtils';
 
 
 const ProfileUpdate = ({ closeModal, type, User }: { closeModal?: () => void, type: string, User: any }) => {
@@ -114,6 +115,7 @@ const ProfileUpdate = ({ closeModal, type, User }: { closeModal?: () => void, ty
             DataToUpdate && firestore.collection("users").doc(id).set(DataToUpdate, { merge: true })
                 .then((res) => {
                     dispatch(setNotice({ name: 'editProfile', msg: 'Profile details updated successfully!', code: 3, time: 3000 }));
+                    AddNotification(`${User?.name} updated profile.`, id, `${User?.name} updated profile. Check and varify.`, `employees/view/${id}`, 'employee')
                     block && block.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     setTimeout(() => {
                         closeModal?.();

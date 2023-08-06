@@ -64,7 +64,7 @@ const Header = () => {
                                 <div className="absolute top-full hidden right-0 pt-3 group-hover:block   bg-opacity-50 ">
                                     <div className="bg-defaultBg text-left rounded p-4 px-5 block border-defaultBg-100 border">
                                         <p><Link to='../employees/view/qDgkYNJslpyXBNkkuq51'>My profile</Link></p>
-                                        <p><Link to='/'>Settings</Link></p>
+                                        <p><Link to='../settings'>Settings</Link></p>
                                         <Logout />
                                     </div>
                                 </div>

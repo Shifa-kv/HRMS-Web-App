@@ -28,9 +28,17 @@ const AttendanceList = () => {
     // return object in format that suits barcharts 
     const formatDate = (datavalue: any) => {
         const dateObjInData = new Date(datavalue?.time_in.seconds * 1000);
-        const TimeoutInData = datavalue?.time_out
-            ? new Date(datavalue?.time_out.seconds * 1000)
-            : new Date();
+        const isToday = new Date().toLocaleDateString() === dateObjInData.toLocaleDateString();
+        let TimeoutInData: Date;
+
+        if (datavalue?.time_out) {
+            TimeoutInData = new Date(datavalue?.time_out.seconds * 1000);
+        } else if (isToday) {
+            TimeoutInData = new Date();
+        } else {
+            const newDateObj = new Date(dateObjInData);
+            TimeoutInData = new Date(newDateObj.setHours(23, 59, 0, 0));
+        }
         let dayInData = dateObjInData.getDate();
         let workHours = TimeoutInData.getHours() - dateObjInData.getHours();
         let workMinutes = TimeoutInData.getMinutes() - dateObjInData.getMinutes();
@@ -49,14 +57,20 @@ const AttendanceList = () => {
             .get().then((snapshot) => {
                 const values = snapshot.docs.map((res) => {
                     const { time_in, time_out } = res.data();
+                    const dateObjInData = new Date( time_in.seconds * 1000);
+                    const isToday = new Date().toLocaleDateString() === dateObjInData.toLocaleDateString();
+                    if (!time_out && !isToday) {
+                        const newDateObj = new Date(dateObjInData);
+                        const TimeoutInData = Timestamp.fromDate(new Date(newDateObj.setHours(23, 59, 0, 0)));
+                        return { time_in, time_out:TimeoutInData };
+                    }
                     return { time_in, time_out };
                 })
                 setData(values)
                 return values
             }).then((values) => {
                 const filteredData = values?.filter((datavalue: any) => {
-                    const dateObj = new Date(datavalue?.time_in * 1000);
-                    console.log('res',dateObj.getMonth(),month)
+                    const dateObj = new Date(datavalue?.time_in.seconds * 1000);
                     return dateObj.getMonth() === month
                 }).map((res: any) => {
                     return formatDate(res);
@@ -65,6 +79,7 @@ const AttendanceList = () => {
             })
 
     }, [])
+    console.log(data)
 
     const AttendanceData: any = (propData: any) => {
         const filteredData = propData.map((res: any) => {
@@ -75,7 +90,7 @@ const AttendanceList = () => {
         // Total overtime calculation
         let Overtime: number = 0;
         filteredData.filter((value: any) => value.uv > 8).map((res: any) => {
-            Overtime = Overtime + (Number(res.uv) - 8);
+            Overtime = Math.round(Overtime + (Number(res.uv) - 8));
         })
         return { Total, Overtime }
     }
@@ -105,6 +120,7 @@ const AttendanceList = () => {
                     return dateObj.getMonth() === 11
             }).map((res: any) => formatDate(res))
             console.log(filteredData)
+
             if (month !== 0) {
                 chartTitle = monthName[month - 1] + ' ' + year
             } else {
@@ -146,7 +162,6 @@ const AttendanceList = () => {
     const handleTableFilter = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
         const { value, name } = e.currentTarget;
         setTableFilter({ value, name })
-        console.log(TableFilter)
     }
 
     const sortedTableData = useMemo(() => {

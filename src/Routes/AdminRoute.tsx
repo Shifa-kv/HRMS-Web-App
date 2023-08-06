@@ -7,6 +7,7 @@ import ViewEmployee from '../Pages/Admin/ViewEmployee'
 import Notifications from '../Pages/Admin/Notifications'
 import Projects from '../Pages/Admin/Projects'
 import Leaves from '../Pages/Admin/Leaves'
+import Settings from '../Pages/Admin/Settings'
 
 const AdminRoute = () => {
   return (
@@ -19,6 +20,7 @@ const AdminRoute = () => {
       <Route path='/projects' element={<Projects />} />
       <Route path='/leaves' element={<Leaves />} />
       <Route path='/notifications' element={<Notifications />} />
+      <Route path='/settings' element={<Settings />} />
     </Routes>
   )
 }
