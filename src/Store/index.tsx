@@ -4,6 +4,7 @@ import loadingSlice from "./loadingSlice";
 import noticeSlice from "./noticeSlice";
 import departmentSlice from "./departmentSlice";
 import attendanceSlice from "./attendanceSlice";
+import leavesSlice from "./leavesSlice";
 
 const Store = configureStore({
     reducer: {
@@ -11,7 +12,8 @@ const Store = configureStore({
         loading : loadingSlice,
         notice : noticeSlice,
         department: departmentSlice,
-        attendance: attendanceSlice
+        attendance: attendanceSlice,
+        leavesData: leavesSlice
     }
 });
 export default Store

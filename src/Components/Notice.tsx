@@ -33,7 +33,7 @@ const Notice = ({ typeProp }: { typeProp: string }) => {
   return (
     <div className='noticeBoard'>
       {noticeStore?.status && data && (
-        <div className={`${bgColor} p-4`}>
+        <div className={`${bgColor} py-3 px-4`}>
           <ul>
             {data?.message?.map((notice, index) => (
               <li key={index} className="mb-2 flex items-center">

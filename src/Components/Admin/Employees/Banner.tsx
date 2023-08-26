@@ -177,12 +177,13 @@ const EmployeeBanner = (
 
                             <div className='flex space-x-3 mb-3'>
                                 <button className=' rounded-md m-auto border hover:bg-red-600 text-white w-full font-bold py-2 px-4  bg-red-700'
-                                    onClick={deleteUser}
+                                    // onClick={deleteUser}
                                 >Remove</button>
                                 <button className='w-full rounded-md m-auto border border-color-one hover:bg-color-one hover:text-white text-color-one font-bold py-2 px-4 '
                                     onClick={() => setShowForm({ ...ShowForm, DeleteForm: false })}
                                 >Close</button>
                             </div>
+                            <p>Delete action is currently disabled on development mode.</p>
 
                         </div>
                     </div>

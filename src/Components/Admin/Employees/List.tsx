@@ -4,13 +4,14 @@ import { Timestamp, firestore } from '../../../Firebase/Config'
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDepartment, FindDepartment } from '../../../Utils/departmentUtils'
+import Loading from '../../Loading'
 type SelectionType = {
     [key: string]: string | null;
 };
 
 const EmployeeList = ({ selection }: { selection: SelectionType }) => {
     const [Users, setUsers] = useState<any>();
-    const [userUpdationStatus, setUserUpdationStatus] = useState<boolean>(false);
+    const [userLoading, setUserLoading] = useState(true);
     const department = useDepartment();
     let statusColor = 'bg-green-600';
 
@@ -43,7 +44,6 @@ const EmployeeList = ({ selection }: { selection: SelectionType }) => {
                 const dateObj = new Date(doc?.data()?.time_in?.seconds * 1000);
                 return dateObj.toLocaleDateString() === today;
               });
-              console.log(user.id,hasAttendanceToday)
               return {
                 ...user,
                 status: hasAttendanceToday,
@@ -54,18 +54,11 @@ const EmployeeList = ({ selection }: { selection: SelectionType }) => {
 
             }
           }));
-      
           setUsers(updatedUsers);
-          console.log(updatedUsers);
-
+          setUserLoading(false);
         });
       }, []);
       
-      
-      
-      
-
-
 
     // Filter users by department 
     const filteredUsers = useMemo(() => {
@@ -86,7 +79,11 @@ const EmployeeList = ({ selection }: { selection: SelectionType }) => {
         return filteredUsers;
     }, [filteredUsers, selection]);
 
-    return (
+
+    return(
+        userLoading ? (
+        <Loading />
+        ) : (
         <div className='flex space-x-5  flex-wrap justify-center'>
             {Users && sortedUsers?.map((user: any, index: number) => {
                 const dep = FindDepartment(user?.department, department);
@@ -122,6 +119,6 @@ const EmployeeList = ({ selection }: { selection: SelectionType }) => {
             })
             }
         </div>
-    )
+    ))
 }
 export default EmployeeList

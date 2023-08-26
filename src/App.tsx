@@ -10,6 +10,7 @@ import { auth, firestore } from './Firebase/Config';
 import { setLoading } from './Store/loadingSlice';
 import Loading from './Components/Loading';
 import { setDepartment } from './Store/departmentSlice';
+import { setLeavesTypes, setUserLeaves } from './Store/leavesSlice';
 
 function App() {
   const dispatch = useDispatch();
@@ -24,15 +25,15 @@ function App() {
             snapshot.forEach((doc) => {
               // setting current user data state
               let userData = doc.data();
-              if (userData?.manager ) {
+              if (userData?.manager) {
                 firestore.collection('users').doc(userData?.manager).get()
                   .then((managerdoc) => {
                     const managerName = managerdoc.data()?.name;
-                    userData = {...userData,managerName}
-                    dispatch(setUser({ ...userData, auth_id:userData.id, id: doc.id, managerName }))
+                    userData = { ...userData, managerName }
+                    dispatch(setUser({ ...userData, auth_id: userData.id, id: doc.id, managerName }))
                   })
               }
-              else{
+              else {
                 dispatch(setUser({ ...userData, id: doc.id }))
               }
               // setting departments state
@@ -46,6 +47,32 @@ function App() {
                 })
                 dispatch(setDepartment(deptData))
               });
+              // setting type of leaves in to store
+              firestore.collection('leave_type').get().then((data) => {
+                const leaveType = data.docs.map((type) => {
+                  return { ...type.data(), id: type.id }
+                })
+                dispatch(setLeavesTypes(leaveType));
+              })
+              // setting leave data of the user
+              firestore.collection('leaves').where('user_id', '==', doc.id).onSnapshot((data) => {
+                const leaves = data.docs.map((leave) => {
+                  const { end, start, status, reason, type, timestamp } = leave.data();
+                  const timeDiff = end.toDate().getTime() - start.toDate().getTime();
+                  const daysCount = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1;
+                  return {
+                    id: leave.id,
+                    status,
+                    type,
+                    reason,
+                    count:daysCount,
+                    end: end.toDate().toISOString(),
+                    start: start.toDate().toISOString(),
+                    timestamp: timestamp?.toDate().toISOString()
+                  }
+                })
+                dispatch(setUserLeaves(leaves));
+              })
             });
             dispatch(setLoading(false));
           }, (error) => {

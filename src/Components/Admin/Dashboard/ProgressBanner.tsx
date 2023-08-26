@@ -52,7 +52,7 @@ const ProgressBanner = () => {
           <div className='w-2/12 border border-defaultBg rounded-lg p-4 bg-white'>
             <FaDiagramProject size={50} className='bg-color-three text-defaultBg p-3 rounded-full' />
             <h6>Projects pending</h6>
-            <h3>20<span className=' text-base'>/50</span></h3>
+            <h3>0<span className=' text-base'>/0</span></h3>
           </div>
           <div className='w-3/12 border h-max border-defaultBg rounded-lg p-4 flex space-x-4 justify-around items-center bg-white'>
             <ProgressCircle text={Users?.length} value={CalculatePercentage((filterUser('jobmode', 'remote')?.length), (Users?.length))} height='107px' />

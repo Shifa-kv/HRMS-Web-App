@@ -34,8 +34,8 @@ const Header = () => {
                                     </Link>
                                 </li>
                                 <li className="flex px-3 py-1 rounded-2xl items-center hover:bg-defaultBg-100">
-                                    <Link to='../projects' className='flex items-center'>
-                                        <FaBarsProgress className="mr-2" /> Projects
+                                    <Link to='../attendance' className='flex items-center'>
+                                        <FaBarsProgress className="mr-2" /> Attendance
                                     </Link>
                                 </li>
                             </ul>

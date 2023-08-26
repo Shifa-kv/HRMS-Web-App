@@ -1,3 +1,5 @@
+import { Timestamp } from "../Firebase/Config";
+
 export type RootState = {
   isLoading: boolean
   auth: User
@@ -9,6 +11,11 @@ export type RootState = {
   }
   department?: department | null
   attendance:attendance
+  leaveData:{
+    userLeaves:{[key: string]: any } | null
+    leavesTypes:{} | null
+  }
+  
 };
 type User = {
   isAuthenticated: boolean;
@@ -44,7 +51,11 @@ const InitialState: RootState = {
   department: null,
   attendance:{
     allowCheckin:false
-  }
+  },
+  leaveData:{
+    userLeaves: null,
+    leavesTypes:null
+  } 
 };
 
 export { InitialState };

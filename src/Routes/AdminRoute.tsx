@@ -8,6 +8,7 @@ import Notifications from '../Pages/Admin/Notifications'
 import Projects from '../Pages/Admin/Projects'
 import Leaves from '../Pages/Admin/Leaves'
 import Settings from '../Pages/Admin/Settings'
+import Attendance from '../Pages/Admin/Attendance'
 
 const AdminRoute = () => {
   return (
@@ -18,6 +19,7 @@ const AdminRoute = () => {
       <Route path='/employees' element={<Employees />} />
       <Route path='/employees/view/:id' element={<ViewEmployee />} />
       <Route path='/projects' element={<Projects />} />
+      <Route path='/attendance' element={<Attendance />} />
       <Route path='/leaves' element={<Leaves />} />
       <Route path='/notifications' element={<Notifications />} />
       <Route path='/settings' element={<Settings />} />
