@@ -117,7 +117,7 @@ const Login = () => {
               id="password"
               type="password"
               name="password"
-              defaultValue=' '
+              defaultValue='123456'
               onBlur={handleChange}
             />
             {ValidationErrors.password &&
