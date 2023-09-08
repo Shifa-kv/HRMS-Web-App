@@ -1,9 +1,10 @@
 import Header from "../../Components/Admin/Header";
 import ListNotifications from "../../Components/Admin/ListNotifications";
+import { Timestamp, firestore } from "../../Firebase/Config";
 
 const Notifications = () => {
+    
 
-  
     return (
         <section>
             <Header />
@@ -15,7 +16,6 @@ const Notifications = () => {
                 </div>
             </div>
             <ListNotifications />
-
         </section >
     )
 }

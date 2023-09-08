@@ -43,6 +43,7 @@ const Dashboard = () => {
             return monthlyData[month].uv = monthlyData[month].uv + 1;
           }
         })
+        
         const filteredMonthlyData = monthlyData.filter((item:any) => item !== undefined);
         setData(filteredMonthlyData)
       })
@@ -59,8 +60,8 @@ const Dashboard = () => {
       <ProgressBanner />
       <div className='container mt-6 mb-6'>
         <div className='flex space-x-4'>
-          <div className='w-7/12'>
-            <div className="bg-white rounded-lg shadow-md py-5 overflow-hidden h-full max-h-[500px]">
+          <div className='w-7/12 bg-white rounded-lg shadow-md'>
+            <div className=" py-5 overflow-hidden h-full max-h-[500px]">
               <StackedBarChart data={data} />
             </div>
           </div>

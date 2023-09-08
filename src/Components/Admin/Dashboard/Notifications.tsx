@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Notifications = () => {
     const [Notifications, setNotifications] = useState<any>([]);
     useEffect(() => {
-        firestore.collection("notifications").orderBy("timestamp", "desc").limit(10).onSnapshot((snapshot) => {
+        firestore.collection("notifications").orderBy("timestamp", "desc").limit(5).onSnapshot((snapshot) => {
             const userData = snapshot.docs.map((snapshot) => {
                 return { ...snapshot.data(), id: snapshot.id }
             })

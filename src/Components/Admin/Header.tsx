@@ -43,10 +43,10 @@ const Header = () => {
                     </div>
                     <div className="w-4/12 text-right relative">
                         <ul className="flex justify-end gap-x-1 ">
-                            <li className="flex items-center">
+                            {/* <li className="flex items-center">
                                 <FaSearchengin size={25}
                                     className="mr-2 border border-defaultBg-100 rounded-full p-1 text-center bg-defaultBg-100"
-                                /></li>
+                                /></li> */}
                             <li className="flex items-center">
                                 <Link to='../notifications'>
                                     <FaBell size={25}

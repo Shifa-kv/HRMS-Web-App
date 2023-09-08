@@ -41,7 +41,7 @@ const StackedBarChart = ({data}:any) => {
                 <div className="bg-defaultBg border p-2 rounded-lg">
                     <p className="label text-xs text-white">{payload[0].value} On-time</p>
                     <p className="label text-xs text-white">{payload[1].value} Late arrivals</p>
-                    <p className="label text-xs text-white">{payload[2]?payload[2].value:0} Absent</p>
+                    {/* <p className="label text-xs text-white">{payload[2]?payload[2].value:0} Absent</p> */}
                 </div>
             );
         }
@@ -70,12 +70,12 @@ const StackedBarChart = ({data}:any) => {
                     payload={[
                         { value: 'Late Arrival', type: 'circle', color: '#c4975b' },
                         { value: 'On-time', type: 'circle', color: '#1d322f' },
-                        { value: 'Absence', type: 'circle', color: '#cfd0d1' },
+                        // { value: 'Absence', type: 'circle', color: '#cfd0d1' },
                     ]}
                 />                
                 <Bar dataKey="uv" stackId="a" fill="#1d322f" shape={<CustomBar radius={10} />} />
                 <Bar dataKey="pv" stackId="a" fill="#c4975b" shape={<CustomBar radius={10} />} />
-                <Bar dataKey="amt" stackId="a" fill="#cfd0d1" shape={<CustomBar radius={10} />} />
+                {/* <Bar dataKey="amt" stackId="a" fill="#cfd0d1" shape={<CustomBar radius={10} />} /> */}
             </BarChart>
         </ResponsiveContainer>
     )
